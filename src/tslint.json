@@ -12,6 +12,20 @@
             "element",
             "app",
             "kebab-case"
-        ]
+        ],
+       "trailing-comma": [
+         true,
+         {
+           "multiline": "always",
+           "singleline": "never"
+         }
+       ],
+      "typedef": [
+        true,
+        "call-signature",
+        "parameter",
+        "arrow-parameter"
+      ]
     }
 }
+
