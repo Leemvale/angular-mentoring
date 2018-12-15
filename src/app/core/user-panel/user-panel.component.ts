@@ -15,12 +15,17 @@ export class UserPanelComponent implements OnInit, User {
   constructor() { }
 
   ngOnInit(): void {
+    this.getUser();
   }
 
   get name(): string {
     return `${this.firstName} ${this.lastName}`;
   }
 
-  private getUser(): void {}
+  private getUser(): void {
+    this.id = '1';
+    this.firstName = 'User';
+    this.lastName = 'Test';
+  }
 
 }

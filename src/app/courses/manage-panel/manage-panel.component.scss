@@ -1,0 +1,37 @@
+.manage-panel {
+  background: #e67883;
+  background: linear-gradient(to right, #e67883, #f5944f);
+  padding-top: 40px;
+  padding-bottom: 20px;
+
+  &__search {
+    max-width: 60%;
+    margin-right: 20px;
+  }
+}
+
+
+.search-input {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: none;
+    padding: 14px 20px;
+  }
+
+  button{
+    background-color: #9bc837;
+    border-radius: 10px;
+    padding: 7px 20px;
+    border: none;
+    color: white;
+    position: absolute;
+    right: 7px;
+    top: 7px;
+  }
+}
