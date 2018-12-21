@@ -1,3 +1,13 @@
-<p>
-  manage-panel works!
-</p>
+<div class="manage-panel">
+  <div class="container">
+    <h1>Find or add angular courses...</h1>
+
+    <div class="search-input manage-panel__search">
+      <input [(ngModel)]="searchValue">
+      <button (click)="onSearchClick()">Search</button>
+    </div>
+
+    <button class="button" (click)="onAddCourse()" ><i class="fa fa-plus"></i>Add course</button>
+  </div>
+</div>
+

@@ -1,5 +1,5 @@
+<app-manage-panel (search)="searchCourses($event)"></app-manage-panel>
+
 <app-breadcrumbs></app-breadcrumbs>
 
-<app-manage-panel></app-manage-panel>
-
-<app-courses-list></app-courses-list>
+<app-courses-list [courses]="courses" (delete)="onDelete($event)"></app-courses-list>

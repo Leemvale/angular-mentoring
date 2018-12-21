@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-manage-panel',
@@ -6,10 +11,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./manage-panel.component.scss'],
 })
 export class ManagePanelComponent implements OnInit {
+  searchValue: string;
+  @Output() search: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  public onSearchClick(): void {
+    this.search.emit(this.searchValue);
+  }
+
+  public onAddCourse(): void {
+  }
 }
