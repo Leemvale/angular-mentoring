@@ -16,6 +16,8 @@ export class CourseComponent implements OnInit {
   @Input() course: Course;
   @Output() delete: EventEmitter<string> = new EventEmitter();
 
+  defaultImageSrc = 'assets/images/course-default-img.jpg';
+
   constructor() { }
 
   ngOnInit(): void {
