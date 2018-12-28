@@ -22,4 +22,10 @@ describe('UserPanelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get user', () => {
+    expect(component.id).toBeTruthy();
+    expect(component.firstName).toBeTruthy();
+    expect(component.lastName).toBeTruthy();
+  });
 });

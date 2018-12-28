@@ -1,11 +1,12 @@
 <a class="course">
-  <img class="course__img" [src]="course.image ? course.image : 'assets/images/course-default-img.jpg'" alt="course-img"/>
+  <img class="course__img" [src]="course.image ? course.image : defaultImageSrc" alt="course-img"/>
   <div class="course__main">
     <h2 class="course__title">{{course.title}}</h2>
     <p>{{course.description}}</p>
     <span class="property">
       <i class="far fa-clock icon"></i>
-      <span class="property__title">Duration:</span> {{course.duration.hours}}h {{course.duration.minutes}}m
+      <span class="property__title">Duration:</span>
+      <span>{{course.duration.hours}}h {{course.duration.minutes}}m</span>
     </span>
     <span class="property">
       <i class="far fa-calendar-alt icon"></i>
