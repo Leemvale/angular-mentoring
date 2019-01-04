@@ -4,6 +4,7 @@ import { By } from '@angular/platform-browser';
 
 import { CoursesListComponent } from './courses-list.component';
 import { Course } from '../course.model';
+import { OrderByPipe } from '../../shared/pipes/order-by/order-by.pipe';
 
 
 describe('CoursesListComponent', () => {
@@ -11,12 +12,38 @@ describe('CoursesListComponent', () => {
   let fixture: ComponentFixture<CoursesListComponent>;
   let debugElement: DebugElement;
 
-  const testCourses = [{}, {}, {}] as Course[];
+  const testCourses = [
+    {
+      id: '1',
+      title: 'Test Course1',
+      creationDate: new Date('01/05/2019'),
+      duration: 120,
+      description: 'Course description',
+      topRated: false,
+    },
+    {
+      id: '2',
+      title: 'Test Course2',
+      creationDate: new Date('01/05/2018'),
+      duration: 10,
+      description: 'Course description',
+      topRated: false,
+    },
+    {
+      id: '3',
+      title: 'Test Course3',
+      creationDate: new Date(),
+      duration: 140,
+      description: 'Course description',
+      topRated: true,
+    },
+  ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         CoursesListComponent,
+        OrderByPipe,
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -29,6 +56,7 @@ describe('CoursesListComponent', () => {
     fixture = TestBed.createComponent(CoursesListComponent);
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
+    component.courses = testCourses;
     fixture.detectChanges();
   });
 
@@ -51,9 +79,14 @@ describe('CoursesListComponent', () => {
   });
 
   it('should render 3 courses', () => {
-    component.courses = testCourses;
-    fixture.detectChanges();
     const coursesEl = debugElement.queryAll(By.css('app-course'));
     expect(coursesEl.length).toBe(3);
+  });
+
+  it('should render no courses sentence', () => {
+    component.courses = [];
+    fixture.detectChanges();
+    const paragraph = debugElement.query(By.css('.container p:first-child'));
+    expect(paragraph.nativeElement.textContent).toBe('No data, feel free to add new course');
   });
 });

@@ -4,14 +4,18 @@ import { By } from '@angular/platform-browser';
 
 import { CourseComponent } from './course.component';
 import { Course } from '../course.model';
+import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
+import { StylingByCreationDirective } from '../../shared/directives/styling-by-creation/styling-by-creation.directive';
+
 
 describe('CourseComponent', () => {
   const testCourse = {
     id: '1',
     title: 'TestCourse1',
     creationDate: new Date('12/22/2018'),
-    duration: {minutes: 10, hours: 0},
+    duration: 10,
     description: 'Course description',
+    topRated: true,
   } as Course;
 
   @Component({
@@ -33,7 +37,12 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CourseComponent, TestHostComponent],
+      declarations: [
+        CourseComponent,
+        TestHostComponent,
+        StylingByCreationDirective,
+        DurationPipe,
+      ],
     })
       .compileComponents();
   }));
@@ -80,7 +89,7 @@ describe('CourseComponent', () => {
 
     it('should render course title', () => {
       const title = debugElement.query(By.css('.course__title')).nativeElement.textContent;
-      expect(title).toBe(testCourse.title);
+      expect(title).toBe(testCourse.title.toUpperCase());
     });
 
     it('should render course description', () => {
@@ -90,12 +99,29 @@ describe('CourseComponent', () => {
 
     it('should render course duration', () => {
       const duration = debugElement.query(By.css('.fa-clock+.property__title+span')).nativeElement.textContent;
-      expect(duration).toBe(`${testCourse.duration.hours}h ${testCourse.duration.minutes}m`);
+      expect(duration).toBe(`${testCourse.duration}m`);
     });
 
     it('should render course date correct', () => {
       const date = debugElement.query(By.css('.fa-calendar-alt+.property__title+time')).nativeElement.textContent;
       expect(date).toBe(`Dec 22, 2018`);
+    });
+
+    it('should render top rated sign', () => {
+      const star = debugElement.query(By.css('.top-rated-sign'));
+      expect(star).toBeTruthy();
+    });
+
+    it('should set top rated course styles', () => {
+      const star = debugElement.query(By.css('.course--top-rated'));
+      expect(star).toBeTruthy();
+    });
+
+    it('should not render top rated sign', () => {
+      component.course.topRated = false;
+      fixture.detectChanges();
+      const star = debugElement.query(By.css('.top-rated-sign'));
+      expect(star).toBeFalsy();
     });
 
     it('should call onEdit method', () => {
@@ -130,7 +156,7 @@ describe('CourseComponent', () => {
 
     it('should render course title', () => {
       const title = debugElement.query(By.css('.course__title')).nativeElement.textContent;
-      expect(title).toBe(testCourse.title);
+      expect(title).toBe(testCourse.title.toUpperCase());
     });
 
     it('should render course description', () => {
@@ -140,7 +166,7 @@ describe('CourseComponent', () => {
 
     it('should render course duration', () => {
       const duration = debugElement.query(By.css('.fa-clock+.property__title+span')).nativeElement.textContent;
-      expect(duration).toBe(`${testCourse.duration.hours}h ${testCourse.duration.minutes}m`);
+      expect(duration).toBe(`${testCourse.duration}m`);
     });
 
     it('should render course date correct', () => {

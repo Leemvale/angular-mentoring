@@ -1,10 +1,9 @@
-import { Time } from '@angular/common';
-
 export interface Course {
   id: string;
   title: string;
   creationDate: Date;
-  duration: Time;
+  duration: number;
   description: string;
+  topRated: boolean;
   image?: string;
 }
