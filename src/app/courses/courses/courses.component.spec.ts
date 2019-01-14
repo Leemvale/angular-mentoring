@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { CoursesComponent } from './courses.component';
+import { SearchByPipe } from '../../shared/pipes/search-by/search-by.pipe';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -11,6 +12,7 @@ describe('CoursesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CoursesComponent,
+        SearchByPipe,
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

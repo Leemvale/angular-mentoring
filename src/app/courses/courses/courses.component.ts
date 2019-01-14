@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Course } from '../course.model';
+import { SearchByPipe } from '../../shared/pipes/search-by/search-by.pipe';
 
 @Component({
   selector: 'app-courses',
@@ -7,6 +8,7 @@ import { Course } from '../course.model';
   styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
+  allCourses: Course[] = [];
   courses: Course[] = [];
 
   constructor() { }
@@ -16,47 +18,54 @@ export class CoursesComponent implements OnInit {
   }
 
   private getCourses(): void {
-    this.courses = [
+    this.allCourses = [
       {
         id: '1',
-        title: 'TestCourse1',
-        creationDate: new Date(),
-        duration: { minutes: 10, hours: 0 },
+        title: 'Test Course1',
+        creationDate: new Date('01/05/2019'),
+        duration: 120,
         description: 'Course description',
+        topRated: false,
       },
       {
         id: '2',
-        title: 'TestCourse2',
-        creationDate: new Date(),
-        duration: { minutes: 50, hours: 0 },
+        title: 'Test Course2',
+        creationDate: new Date('01/05/2018'),
+        duration: 10,
         description: 'Course description',
+        topRated: false,
       },
       {
         id: '3',
-        title: 'TestCourse3',
+        title: 'Test Course3',
         creationDate: new Date(),
-        duration: { minutes: 0, hours: 1 },
+        duration: 140,
         description: 'Course description',
+        topRated: true,
       },
       {
         id: '4',
-        title: 'TestCourse4',
+        title: 'Test Course4',
         creationDate: new Date(),
-        duration: { minutes: 10, hours: 1 },
+        duration: 22,
         description: 'Course description',
+        topRated: false,
       },
       {
         id: '5',
-        title: 'TestCourse5',
+        title: 'Test Course5',
         creationDate: new Date(),
-        duration: { minutes: 20, hours: 2 },
+        duration: 185,
         description: 'Course description',
+        topRated: true,
       },
     ];
+
+    this.courses = this.allCourses.slice();
   }
 
   public searchCourses(searchValue: string): void {
-    console.log('%c%s', 'color: #bada55; font-weight: bold', searchValue);
+    this.courses = new SearchByPipe().transform(this.allCourses, 'title', searchValue);
   }
 
   public onDelete(courseId: string): void {
