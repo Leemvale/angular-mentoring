@@ -1,0 +1,9 @@
+.duration-input {
+  display: flex;
+  align-items: center;
+
+  &__result {
+    flex-basis: 20%;
+    margin-left: 30px;
+  }
+}

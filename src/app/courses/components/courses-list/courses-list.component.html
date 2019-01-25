@@ -3,7 +3,7 @@
 
   <ul>
     <li *ngFor="let course of courses | orderBy: 'creationDate'">
-      <app-course [course]="course" (delete)="onDelete($event)"></app-course>
+      <app-course [course]="course" (delete)="onDelete($event)" (edit)="onEdit($event)"></app-course>
     </li>
   </ul>
 

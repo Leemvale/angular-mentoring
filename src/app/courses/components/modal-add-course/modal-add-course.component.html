@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>{{dialogTitle}}</h2>
+<mat-dialog-content>
+  <form [formGroup]="addCourseForm" class="addCourseForm">
+    <label>
+      Title*
+      <input type="text" formControlName="title" [(ngModel)]="course.title">
+    </label>
+
+    <label>
+      Description*
+      <textarea type="text" formControlName="description" [(ngModel)]="course.description"></textarea>
+    </label>
+
+    <div class="row">
+      <label class="row-2-col">
+        Date*
+        <app-date-input [(date)]="course.creationDate"></app-date-input>
+      </label>
+
+      <label class="row-2-col">
+        Duration*
+        <app-duration-input [(duration)]="course.duration"></app-duration-input>
+      </label>
+
+    </div>
+
+    <label>
+      Authors*
+      <app-people-input></app-people-input>
+    </label>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</mat-dialog-actions>

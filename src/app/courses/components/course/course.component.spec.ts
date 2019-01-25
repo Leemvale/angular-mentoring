@@ -73,52 +73,65 @@ describe('CourseComponent', () => {
       component = fixture.componentInstance;
       debugElement = fixture.debugElement;
       component.course = testCourse;
-      fixture.detectChanges();
     });
+
     it('should render default course image', () => {
+      fixture.detectChanges();
       const image = debugElement.query(By.css('img')).nativeElement;
       expect(image.src).toMatch(component.defaultImageSrc);
     });
 
     it('should render course image', () => {
-      testCourse.image = 'assets/images/logo.png';
+      component.course = {
+        ...testCourse,
+        image: 'assets/images/logo.png',
+      };
       fixture.detectChanges();
       const image = debugElement.query(By.css('img')).nativeElement;
-      expect(image.src).toMatch(testCourse.image);
+      expect(image.src).toMatch(component.course.image);
     });
 
     it('should render course title', () => {
+      fixture.detectChanges();
       const title = debugElement.query(By.css('.course__title')).nativeElement.textContent;
       expect(title).toBe(testCourse.title.toUpperCase());
     });
 
     it('should render course description', () => {
+      fixture.detectChanges();
       const description = debugElement.query(By.css('.course__main p')).nativeElement.textContent;
       expect(description).toBe(testCourse.description);
     });
 
     it('should render course duration', () => {
+      fixture.detectChanges();
       const duration = debugElement.query(By.css('.fa-clock+.property__title+span')).nativeElement.textContent;
       expect(duration).toBe(`${testCourse.duration}m`);
     });
 
     it('should render course date correct', () => {
+      fixture.detectChanges();
       const date = debugElement.query(By.css('.fa-calendar-alt+.property__title+time')).nativeElement.textContent;
       expect(date).toBe(`Dec 22, 2018`);
     });
 
     it('should render top rated sign', () => {
+      fixture.detectChanges();
       const star = debugElement.query(By.css('.top-rated-sign'));
       expect(star).toBeTruthy();
     });
 
     it('should set top rated course styles', () => {
+      fixture.detectChanges();
       const star = debugElement.query(By.css('.course--top-rated'));
       expect(star).toBeTruthy();
     });
 
     it('should not render top rated sign', () => {
-      component.course.topRated = false;
+      component.course = {
+        ...testCourse,
+        topRated: false,
+      };
       fixture.detectChanges();
       const star = debugElement.query(By.css('.top-rated-sign'));
       expect(star).toBeFalsy();
@@ -148,10 +161,13 @@ describe('CourseComponent', () => {
     });
 
     it('should render course image', () => {
-      hostComponent.course.image = 'assets/images/logo.png';
+      hostComponent.course = {
+        ...testCourse,
+        image: 'assets/images/logo.png',
+      };
       hostFixture.detectChanges();
       const image = debugElement.query(By.css('img')).nativeElement;
-      expect(image.src).toMatch(testCourse.image);
+      expect(image.src).toMatch(hostComponent.course.image);
     });
 
     it('should render course title', () => {

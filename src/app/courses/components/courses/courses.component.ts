@@ -7,6 +7,8 @@ import { Course } from '../../course.model';
 import { SearchByPipe } from '../../../shared/pipes/search-by/search-by.pipe';
 import { CoursesService } from '../../services/courses/courses.service';
 import { ModalConfirmComponent } from 'src/app/shared/components/modal-confirm/modal-confirm.component';
+import { ModalAddCourseComponent } from '../modal-add-course/modal-add-course.component';
+import { DialogModes } from '../../../shared/enums';
 
 @Component({
   selector: 'app-courses',
@@ -35,7 +37,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.coursesService.getList();
     this.coursesSubscription = this.coursesService.courses.subscribe((courses: Course[]) => {
       this.allCourses = courses;
-      this.courses = this.allCourses.slice();
+      this.courses =  courses.slice();
     });
   }
 
@@ -48,6 +50,25 @@ export class CoursesComponent implements OnInit, OnDestroy {
       data: {
         title: `Remove course ${course.title}`,
         confirm: () => this.coursesService.removeItem(course.id),
+      },
+    });
+  }
+
+  public onAddNewCourse(): void {
+    this.dialog.open(ModalAddCourseComponent, {
+      width: '70%',
+      data: {
+        mode: DialogModes.Create,
+      },
+    });
+  }
+
+  public onEdit(course: Course): void {
+    this.dialog.open(ModalAddCourseComponent, {
+      width: '70%',
+      data: {
+        mode: DialogModes.Edit,
+        course: course,
       },
     });
   }

@@ -71,23 +71,6 @@ describe('CoursesService', () => {
     expect(service.getStore()).toEqual(store);
   });
 
-  it('should log error message if cannot add new course', () => {
-    const testCourse = {
-      id: '5',
-      title: 'Test',
-      creationDate: new Date('01/05/2019'),
-      duration: 30,
-      description: 'Course description',
-      topRated: false,
-    };
-
-    spyOn(service, 'courseMockResponse').and.returnValue(throwError(new Error('Test error')));
-    const log = spyOn( console, 'log');
-    service.createCourse(testCourse);
-
-    expect(log).toHaveBeenCalledWith('Could not create course.');
-  });
-
   it('should update course then update dataStore', () => {
     const update = {
       id: '1',
@@ -121,23 +104,6 @@ describe('CoursesService', () => {
 
     service.updateItem(update);
     expect(service.getStore()).toEqual(store);
-  });
-
-  it('should log error message if cannot update course', () => {
-    const testCourse = {
-      id: '5',
-      title: 'Test',
-      creationDate: new Date('01/05/2019'),
-      duration: 30,
-      description: 'Course description',
-      topRated: false,
-    };
-
-    spyOn(service, 'courseMockResponse').and.returnValue(throwError(new Error('Test error')));
-    const log = spyOn( console, 'log');
-    service.updateItem(testCourse);
-
-    expect(log).toHaveBeenCalledWith('Could not update course.');
   });
 
   it('should remove course then update dataStore', () => {

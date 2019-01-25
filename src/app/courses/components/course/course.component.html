@@ -13,7 +13,7 @@
       <span class="property__title">Date:</span> <time>{{course.creationDate | date}}</time></span>
   </div>
   <div class="buttons">
-    <button class="btn-icon" (click)="onEdit()"><i class="far fa-edit"></i></button>
+    <button class="btn-icon" (click)="onEdit(course)"><i class="far fa-edit"></i></button>
     <button class="btn-icon" (click)="onDelete(course)"><i class="fas fa-trash-alt"></i></button>
   </div>
 </a>

@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { CoursesComponent } from './components/courses/courses.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
@@ -9,6 +7,7 @@ import { ManagePanelComponent } from './components/manage-panel/manage-panel.com
 import { SharedModule } from '../shared/shared.module';
 
 import { CoursesService } from './services/courses/courses.service';
+import { ModalAddCourseComponent } from './components/modal-add-course/modal-add-course.component';
 
 @NgModule({
   declarations: [
@@ -16,14 +15,16 @@ import { CoursesService } from './services/courses/courses.service';
     CoursesListComponent,
     CourseComponent,
     ManagePanelComponent,
+    ModalAddCourseComponent,
   ],
   imports: [
-    CommonModule,
     SharedModule,
-    FormsModule,
   ],
   providers: [
     CoursesService,
+  ],
+  entryComponents: [
+    ModalAddCourseComponent,
   ],
 })
 export class CoursesModule { }
