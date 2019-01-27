@@ -1,0 +1,33 @@
+<div class="login-page">
+  <div class="container login">
+    <div class="login__intro">
+      <h1>Welcome</h1>
+      <p>To the angular global mentoring program, here you can find courses that cover all topics needed to start your own angular application</p>
+    </div>
+
+    <div class="login__form">
+      <h2>Login</h2>
+      <button class="btn-blue">EPAM Login</button>
+
+      <div class="separate-line">
+        <span class="separate-line__label">
+          Or
+        </span>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <label>
+          Email:
+          <input type="text" formControlName="email" required>
+        </label>
+
+        <label>
+          Password:
+          <input type="text" formControlName="password">
+        </label>
+      </form>
+
+      <button class="btn-green" (click)="onLogin()">Login</button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
-html, body {
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
   min-height: 100vh;
 }
 
@@ -24,12 +26,30 @@ h1 {
   margin: 10px 0;
 }
 
-.button {
+%button {
   padding: 10px 20px;
   border: 1px solid white;
   border-radius: 10px;
   color: white;
   background-color: initial;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button {
+  @extend %button;
+}
+
+.btn-blue {
+  @extend %button;
+  color: #63c7e5;
+  border-color: #63c7e5;;
+}
+
+.btn-green {
+  @extend %button;
+  background-color: #9bc837;
+  border: none;
 }
 
 .container {
@@ -48,12 +68,10 @@ h1 {
 }
 
 .btn-color {
+  @extend %button;
   background: linear-gradient(to right, #ea9094, #f7a868);
-  color: white;
   text-transform: uppercase;
-  padding: 10px 20px;
   border: none;
-  border-radius: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }

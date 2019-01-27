@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { LogoComponent } from './logo/logo.component';
-import { UserPanelComponent } from './user-panel/user-panel.component';
+import { RouterModule } from '@angular/router';
+
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { AuthorizationService } from './services/authorization/authorization.service';
 
 @NgModule({
   declarations: [
@@ -14,6 +17,10 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
   ],
   imports: [
     CommonModule,
+    RouterModule,
+  ],
+  providers: [
+    AuthorizationService,
   ],
   exports: [
     HeaderComponent,

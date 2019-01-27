@@ -1,0 +1,19 @@
+<a class="course" [ngClass]="{'course--top-rated': course.topRated}" [appStylingByCreation]="course.creationDate.getTime()" >
+  <img class="course__img" [src]="course.image ? course.image : defaultImageSrc" alt="course-img"/>
+  <div class="course__main">
+    <h2 class="course__title">{{course.title | uppercase}}<i class="fas fa-star top-rated-sign" *ngIf="course.topRated"></i></h2>
+    <p>{{course.description}}</p>
+    <span class="property">
+      <i class="far fa-clock icon"></i>
+      <span class="property__title">Duration:</span>
+      <span>{{course.duration | duration}}</span>
+    </span>
+    <span class="property">
+      <i class="far fa-calendar-alt icon"></i>
+      <span class="property__title">Date:</span> <time>{{course.creationDate | date}}</time></span>
+  </div>
+  <div class="buttons">
+    <button class="btn-icon" (click)="onEdit()"><i class="far fa-edit"></i></button>
+    <button class="btn-icon" (click)="onDelete(course)"><i class="fas fa-trash-alt"></i></button>
+  </div>
+</a>

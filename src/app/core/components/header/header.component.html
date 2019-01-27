@@ -1,0 +1,10 @@
+<header class="main-header">
+  <app-logo></app-logo>
+  <app-user-panel *ngIf="user; else logIn" [user]="user" (logOut)="onLogOut()"></app-user-panel>
+
+  <ng-template #logIn>
+    <a class="button" routerLink="/login">Log In</a>
+  </ng-template>
+
+</header>
+
