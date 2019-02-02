@@ -25,6 +25,7 @@ export class CoursesListComponent implements
 
   @Input() courses: Course[];
   @Output() delete: EventEmitter<Course> = new EventEmitter();
+  @Output() edit: EventEmitter<Course> = new EventEmitter();
 
   constructor() { }
 
@@ -63,6 +64,10 @@ export class CoursesListComponent implements
 
   public onDelete(course: Course): void {
     this.delete.emit(course);
+  }
+
+  public onEdit(course: Course): void {
+    this.edit.emit(course);
   }
 
   public onLoadMore(): void {

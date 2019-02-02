@@ -4,6 +4,7 @@ import {
   Input,
   OnInit,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Course } from '../../course.model';
 
@@ -11,10 +12,12 @@ import { Course } from '../../course.model';
   selector: 'app-course',
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseComponent implements OnInit {
   @Input() course: Course;
   @Output() delete: EventEmitter<Course> = new EventEmitter();
+  @Output() edit: EventEmitter<Course> = new EventEmitter();
 
   defaultImageSrc = 'assets/images/course-default-img.jpg';
 
@@ -23,7 +26,9 @@ export class CourseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onEdit(): void { }
+  public onEdit(course: Course): void {
+    this.edit.emit(course);
+  }
 
   public onDelete(course: Course): void {
     this.delete.emit(course);

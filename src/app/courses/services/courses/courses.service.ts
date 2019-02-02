@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Course } from '../../course.model';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -70,27 +71,29 @@ export class CoursesService {
     }, (error: Error) => console.log('Could not load courses.'));
   }
 
-  public createCourse(newCourse: Course): void {
-    this.courseMockResponse(newCourse).subscribe((createdCourse: Course) => {
-      this.dataStore.courses.push(createdCourse);
-      this._courses.next(Object.assign({}, this.dataStore).courses);
-    }, (error: Error) => console.log('Could not create course.'));
+  public createCourse(newCourse: Course): Observable<Course> {
+    return this.courseMockResponse(newCourse).pipe(
+      tap((createdCourse: Course) => {
+        this.dataStore.courses.push(createdCourse);
+        this._courses.next(Object.assign({}, this.dataStore).courses);
+      }),
+    );
   }
 
   public getItemById(id: string): Observable<Course> {
     return of(this.mockCourses.find((item: Course) => item.id === id));
   }
 
-  public updateItem(courseToUpdate: Course): void {
-    this.courseMockResponse(courseToUpdate).subscribe((updatedCourse: Course) => {
-      this.dataStore.courses.forEach((course: Course, idx: number) => {
-        if (course.id === updatedCourse.id) {
-          this.dataStore.courses[idx] = updatedCourse;
-        }
-      });
-
-      this._courses.next(Object.assign({}, this.dataStore).courses);
-    }, (error: Error) => console.log('Could not update course.'));
+  public updateItem(courseToUpdate: Course): Observable<Course> {
+    return this.courseMockResponse(courseToUpdate).pipe(
+      tap((updatedCourse: Course) => {
+        this.dataStore.courses.forEach((course: Course, idx: number) => {
+          if (course.id === updatedCourse.id) {
+            this.dataStore.courses[idx] = updatedCourse;
+          }
+        });
+        this._courses.next(Object.assign({}, this.dataStore).courses);
+      }));
   }
 
   public removeItem(id: string): void {

@@ -1,0 +1,5 @@
+<div class="duration-input">
+  <input #newDuration type="number" (keyup)="onDurationChange(newDuration.valueAsNumber)" [(ngModel)]="duration">
+  <div class="duration-input__result"><span *ngIf="duration">{{duration | duration}}</span></div>
+</div>
+

@@ -67,4 +67,8 @@ describe('OrderByPipe', () => {
     ];
     expect(pipe.transform(testCourses, 'creationDate')).toEqual(expectedCourses);
   });
+
+  it('should nothing change', () => {
+    expect(pipe.transform(testCourses, 'test')).toBeFalsy();
+  });
 });
