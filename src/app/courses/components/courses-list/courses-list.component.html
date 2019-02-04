@@ -1,9 +1,11 @@
+<app-manage-panel (search)="searchCourses($event)" (addNew)="onAddNewCourse()"></app-manage-panel>
+
 <div class="container">
   <p *ngIf="!courses.length">No data, feel free to add new course</p>
 
   <ul>
     <li *ngFor="let course of courses | orderBy: 'creationDate'">
-      <app-course [course]="course" (delete)="onDelete($event)" (edit)="onEdit($event)"></app-course>
+      <app-course [course]="course" (delete)="onDelete($event)"></app-course>
     </li>
   </ul>
 

@@ -5,6 +5,10 @@ import { By } from '@angular/platform-browser';
 import { CoursesListComponent } from './courses-list.component';
 import { Course } from '../../course.model';
 import { OrderByPipe } from '../../../shared/pipes/order-by/order-by.pipe';
+import { MatDialogModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CoursesService } from '../../services/courses/courses.service';
+import { of } from 'rxjs';
 
 
 describe('CoursesListComponent', () => {
@@ -39,14 +43,26 @@ describe('CoursesListComponent', () => {
     },
   ];
 
+  const coursesServiceStub = {
+    getList: () => null,
+    courses: of(testCourses),
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MatDialogModule,
+        RouterTestingModule,
+      ],
       declarations: [
         CoursesListComponent,
         OrderByPipe,
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
+      ],
+      providers: [
+        { provide: CoursesService, useValue: coursesServiceStub },
       ],
     })
     .compileComponents();
@@ -62,12 +78,6 @@ describe('CoursesListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should emit delete event', () => {
-    const deleteEvent = spyOn(component.delete, 'emit');
-    component.onDelete(testCourses[0]);
-    expect(deleteEvent).toHaveBeenCalledTimes(1);
   });
 
   it('should call load more', () => {

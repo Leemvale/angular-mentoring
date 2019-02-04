@@ -7,7 +7,7 @@ import { ManagePanelComponent } from './components/manage-panel/manage-panel.com
 import { SharedModule } from '../shared/shared.module';
 
 import { CoursesService } from './services/courses/courses.service';
-import { ModalAddCourseComponent } from './components/modal-add-course/modal-add-course.component';
+import { CoursePageComponent } from './components/course-page/course-page.component';
 
 @NgModule({
   declarations: [
@@ -15,16 +15,13 @@ import { ModalAddCourseComponent } from './components/modal-add-course/modal-add
     CoursesListComponent,
     CourseComponent,
     ManagePanelComponent,
-    ModalAddCourseComponent,
+    CoursePageComponent,
   ],
   imports: [
     SharedModule,
   ],
   providers: [
     CoursesService,
-  ],
-  entryComponents: [
-    ModalAddCourseComponent,
   ],
 })
 export class CoursesModule { }
