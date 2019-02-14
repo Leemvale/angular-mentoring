@@ -1,61 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Course } from '../../course.model';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CoursesService {
+  private baseUrl = environment.baseUrl;
   private _courses: BehaviorSubject<Course[]>;
   private dataStore: {
     courses: Course[],
   };
 
-  private mockCourses = [
-    {
-      id: '1',
-      title: 'Test Course1',
-      creationDate: new Date('01/05/2019'),
-      duration: 120,
-      description: 'Course description',
-      topRated: false,
-    },
-    {
-      id: '2',
-      title: 'Test Course2',
-      creationDate: new Date('01/05/2018'),
-      duration: 10,
-      description: 'Course description',
-      topRated: false,
-    },
-    {
-      id: '3',
-      title: 'Test Course3',
-      creationDate: new Date(),
-      duration: 140,
-      description: 'Course description',
-      topRated: true,
-    },
-    {
-      id: '4',
-      title: 'Test Course4',
-      creationDate: new Date(),
-      duration: 22,
-      description: 'Course description',
-      topRated: false,
-    },
-    {
-      id: '5',
-      title: 'Test Course5',
-      creationDate: new Date(),
-      duration: 185,
-      description: 'Course description',
-      topRated: true,
-    },
-  ];
-
-  constructor() {
+  constructor(
+    private http: HttpClient,
+  ) {
     this.dataStore = { courses: [] };
     this._courses = new BehaviorSubject([]);
   }
@@ -64,24 +27,29 @@ export class CoursesService {
     return this._courses.asObservable();
   }
 
-  public getList(): void {
-    this.getMockCourses().subscribe((courses: Course[]) => {
-      this.dataStore.courses = courses;
-      this._courses.next(Object.assign({}, this.dataStore).courses);
-    }, (error: Error) => console.log('Could not load courses.'));
+  public getList(textFragment?: string, newSet?: boolean): void {
+    const onePageItems = 5;
+    const numberOfItems = newSet ? onePageItems : this.dataStore.courses.length + onePageItems;
+    const textSearch = textFragment ? `&textFragment=${textFragment}` : '';
+    this.http.get<Course[]>(`${this.baseUrl}/courses?start=0&count=${numberOfItems}` + textSearch)
+      .subscribe(
+        (courses: Course[]) => {
+        this.dataStore.courses = courses;
+        this._courses.next(Object.assign({}, this.dataStore).courses);
+      },
+        (error: Error) => console.log('Could not load courses.'));
   }
 
-  public createCourse(newCourse: Course): Observable<Course> {
-    return this.courseMockResponse(newCourse).pipe(
-      tap((createdCourse: Course) => {
-        this.dataStore.courses.push({...createdCourse, id: createdCourse.title + createdCourse.duration});
-        this._courses.next(Object.assign({}, this.dataStore).courses);
+  public createCourse(newCourse: Course): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/courses`, newCourse).pipe(
+      tap(() => {
+        this.getList(undefined, true);
       }),
     );
   }
 
-  public getItemById(id: string): Observable<Course> {
-    return of(this.mockCourses.find((item: Course) => item.id === id));
+  public getItemById(id: number): Observable<Course> {
+    return of(this.dataStore.courses.find((item: Course) => item.id === id));
   }
 
   public updateItem(courseToUpdate: Course): Observable<Course> {
@@ -96,24 +64,14 @@ export class CoursesService {
       }));
   }
 
-  public removeItem(id: string): void {
-    of(this.mockCourses.find((item: Course) => item.id === id)).subscribe((deletedCourse: Course) => {
-      this.dataStore.courses.forEach((course: Course, idx: number) => {
-        if (course.id === deletedCourse.id) {
-          this.dataStore.courses.splice(idx, 1);
-        }
-      });
-
-      this._courses.next(Object.assign({}, this.dataStore).courses);
+  public removeItem(id: number): void {
+    this.http.delete<void>(`${this.baseUrl}/courses/${id}`).subscribe(() => {
+      this.getList(undefined, true);
     }, (error: Error) => console.log('Could not delete course.'));
   }
 
   public getStore(): any {
-    return Object.assign({}, this.dataStore);
-  }
-
-  public getMockCourses(): Observable<Course[]> {
-    return of(this.mockCourses);
+    return Object.assign({}, { courses:  [...this.dataStore.courses]});
   }
 
   public courseMockResponse(course: Course): Observable<Course> {

@@ -21,10 +21,10 @@ export class CoursePageComponent implements OnInit, OnDestroy {
   course: Course = {} as Course;
 
   addCourseForm = this.fb.group({
-    title: ['', Validators.required],
+    name: ['', Validators.required],
     description: ['', Validators.required],
     date: ['', Validators.required],
-    duration: ['', Validators.required],
+    length: ['', Validators.required],
     authors: ['', Validators.required],
   });
 
@@ -42,7 +42,9 @@ export class CoursePageComponent implements OnInit, OnDestroy {
 
       if (this.dialogMode === DialogModes.Edit) {
         const routerParamsSubscription = this.activatedRoute.params.subscribe((params: any) => {
-          const courseSubscription = this.coursesService.getItemById(params['id']).subscribe((course: Course) => this.course = course);
+          const id = Number.parseInt(params['id'], 10);
+          const courseSubscription = this.coursesService.getItemById(id)
+            .subscribe((course: Course) => this.course = course);
           this.anchor.add(courseSubscription);
         });
 

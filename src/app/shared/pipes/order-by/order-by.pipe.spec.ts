@@ -6,7 +6,7 @@ describe('OrderByPipe', () => {
     {
       id: '1',
       title: 'Test Course1',
-      creationDate: new Date('01/05/2019'),
+      date: new Date('01/05/2019').toISOString(),
       duration: 120,
       description: 'Course description',
       topRated: false,
@@ -14,7 +14,7 @@ describe('OrderByPipe', () => {
     {
       id: '2',
       title: 'Test Course2',
-      creationDate: new Date('01/02/2018'),
+      date: new Date('01/02/2018').toISOString(),
       duration: 10,
       description: 'Course description',
       topRated: false,
@@ -22,7 +22,7 @@ describe('OrderByPipe', () => {
     {
       id: '3',
       title: 'Test Course3',
-      creationDate: new Date('11/20/2018'),
+      date: new Date('11/20/2018').toISOString(),
       duration: 140,
       description: 'Course description',
       topRated: true,
@@ -43,7 +43,7 @@ describe('OrderByPipe', () => {
       {
         id: '1',
         title: 'Test Course1',
-        creationDate: new Date('01/05/2019'),
+        date: new Date('01/05/2019').toISOString(),
         duration: 120,
         description: 'Course description',
         topRated: false,
@@ -51,7 +51,7 @@ describe('OrderByPipe', () => {
       {
         id: '3',
         title: 'Test Course3',
-        creationDate: new Date('11/20/2018'),
+        date: new Date('11/20/2018').toISOString(),
         duration: 140,
         description: 'Course description',
         topRated: true,
@@ -59,13 +59,13 @@ describe('OrderByPipe', () => {
       {
         id: '2',
         title: 'Test Course2',
-        creationDate: new Date('01/02/2018'),
+        date: new Date('01/02/2018').toISOString(),
         duration: 10,
         description: 'Course description',
         topRated: false,
       },
     ];
-    expect(pipe.transform(testCourses, 'creationDate')).toEqual(expectedCourses);
+    expect(pipe.transform(testCourses, 'date')).toEqual(expectedCourses);
   });
 
   it('should nothing change', () => {

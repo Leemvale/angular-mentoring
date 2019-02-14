@@ -18,28 +18,28 @@ describe('CoursesListComponent', () => {
 
   const testCourses = [
     {
-      id: '1',
-      title: 'Test Course1',
-      creationDate: new Date('01/05/2019'),
-      duration: 120,
+      id: 1,
+      name: 'Test Course1',
+      date: new Date('01/05/2019').toISOString(),
+      length: 120,
       description: 'Course description',
-      topRated: false,
+      isTopRated: false,
     },
     {
-      id: '2',
-      title: 'Test Course2',
-      creationDate: new Date('01/05/2018'),
-      duration: 10,
+      id: 2,
+      name: 'Test Course2',
+      date: new Date('01/05/2018').toISOString(),
+      length: 10,
       description: 'Course description',
-      topRated: false,
+      isTopRated: false,
     },
     {
-      id: '3',
-      title: 'Test Course3',
-      creationDate: new Date(),
-      duration: 140,
+      id: 3,
+      name: 'Test Course3',
+      date: new Date().toISOString(),
+      length: 140,
       description: 'Course description',
-      topRated: true,
+      isTopRated: true,
     },
   ];
 

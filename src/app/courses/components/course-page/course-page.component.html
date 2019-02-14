@@ -4,7 +4,7 @@
   <form [formGroup]="addCourseForm" class="addCourseForm">
     <label>
       Title*
-      <input type="text" formControlName="title" [(ngModel)]="course.title">
+      <input type="text" formControlName="name" [(ngModel)]="course.name">
     </label>
 
     <label>
@@ -15,12 +15,12 @@
     <div class="row">
       <label class="row-2-col">
         Date*
-        <app-date-input [(date)]="course.creationDate"></app-date-input>
+        <app-date-input [(date)]="course.date"></app-date-input>
       </label>
 
       <label class="row-2-col">
         Duration*
-        <app-duration-input [(duration)]="course.duration"></app-duration-input>
+        <app-duration-input [(duration)]="course.length"></app-duration-input>
       </label>
 
     </div>

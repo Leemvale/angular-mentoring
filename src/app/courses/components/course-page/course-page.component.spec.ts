@@ -19,7 +19,7 @@ describe('CoursePageComponent', () => {
   const testCourse = {
     id: '1',
     title: 'Test Course1',
-    creationDate: new Date('01/05/2019'),
+    date: new Date('01/05/2019'),
     duration: 120,
     description: 'Course description',
     topRated: false,

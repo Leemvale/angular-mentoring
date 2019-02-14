@@ -21,10 +21,9 @@ import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/
   styleUrls: ['./courses-list.component.scss'],
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
-
-  allCourses: Course[] = [];
   courses: Course[] = [];
   coursesSubscription: Subscription;
+  searchValue = '';
 
   constructor(
     private coursesService: CoursesService,
@@ -33,29 +32,25 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.getCourses();
+    this.coursesService.getList(this.searchValue, true);
+    this.coursesSubscription = this.coursesService.courses.subscribe((courses: Course[]) => {
+      this.courses = courses;
+    });
   }
 
   ngOnDestroy(): void {
     this.coursesSubscription.unsubscribe();
   }
 
-  private getCourses(): void {
-    this.coursesService.getList();
-    this.coursesSubscription = this.coursesService.courses.subscribe((courses: Course[]) => {
-      this.allCourses = courses;
-      this.courses =  courses.slice();
-    });
-  }
-
   public searchCourses(searchValue: string): void {
-    this.courses = new SearchByPipe().transform(this.allCourses, 'title', searchValue);
+    this.searchValue = searchValue;
+    this.coursesService.getList(searchValue, true);
   }
 
   public onDelete(course: Course): void {
     this.dialog.open(ModalConfirmComponent, {
       data: {
-        title: `Remove course ${course.title}`,
+        title: `Remove course ${course.name}`,
         confirm: () => this.coursesService.removeItem(course.id),
       },
     });
@@ -66,6 +61,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   public onLoadMore(): void {
-    console.log('%c%s', 'color: #bada55; font-weight: bold', 'Load more');
+    this.coursesService.getList(this.searchValue);
   }
 }

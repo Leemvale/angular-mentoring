@@ -31,7 +31,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     )
       .subscribe((course: Course) => {
         if (course) {
-          this.courseName = course.title;
+          this.courseName = course.name;
         } else {
           this.courseName = undefined;
         }
