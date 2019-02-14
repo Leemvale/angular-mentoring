@@ -1,5 +1,2 @@
-<app-manage-panel (search)="searchCourses($event)" (addNew)="onAddNewCourse()"></app-manage-panel>
-
-<app-breadcrumbs></app-breadcrumbs>
-
-<app-courses-list [courses]="courses" (delete)="onDelete($event)" (edit)="onEdit($event)"></app-courses-list>
+<app-breadcrumbs *ngIf="isAuth"></app-breadcrumbs>
+<router-outlet></router-outlet>

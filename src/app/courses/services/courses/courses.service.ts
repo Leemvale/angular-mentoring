@@ -74,7 +74,7 @@ export class CoursesService {
   public createCourse(newCourse: Course): Observable<Course> {
     return this.courseMockResponse(newCourse).pipe(
       tap((createdCourse: Course) => {
-        this.dataStore.courses.push(createdCourse);
+        this.dataStore.courses.push({...createdCourse, id: createdCourse.title + createdCourse.duration});
         this._courses.next(Object.assign({}, this.dataStore).courses);
       }),
     );

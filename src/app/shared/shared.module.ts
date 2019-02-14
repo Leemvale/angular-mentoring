@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { StylingByCreationDirective } from './directives/styling-by-creation/styling-by-creation.directive';
 import { DurationPipe } from './pipes/duration/duration.pipe';
 import { OrderByPipe } from './pipes/order-by/order-by.pipe';
@@ -33,6 +34,7 @@ import { PeopleInputComponent } from './components/people-input/people-input.com
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
   ],
   exports: [
     CommonModule,
@@ -40,6 +42,7 @@ import { PeopleInputComponent } from './components/people-input/people-input.com
     MatButtonModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
     BreadcrumbsComponent,
     StylingByCreationDirective,
     DurationPipe,

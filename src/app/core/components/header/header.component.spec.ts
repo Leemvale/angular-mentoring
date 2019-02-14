@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 
 import { HeaderComponent } from './header.component';
 import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,6 +20,9 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+      ],
       declarations: [ HeaderComponent ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

@@ -6,7 +6,10 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Course } from '../../course.model';
+
 
 @Component({
   selector: 'app-course',
@@ -17,17 +20,18 @@ import { Course } from '../../course.model';
 export class CourseComponent implements OnInit {
   @Input() course: Course;
   @Output() delete: EventEmitter<Course> = new EventEmitter();
-  @Output() edit: EventEmitter<Course> = new EventEmitter();
 
   defaultImageSrc = 'assets/images/course-default-img.jpg';
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
   }
 
   public onEdit(course: Course): void {
-    this.edit.emit(course);
+    this.router.navigate(['courses', course.id]);
   }
 
   public onDelete(course: Course): void {

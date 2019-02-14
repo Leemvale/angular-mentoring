@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -11,11 +12,12 @@ import { User } from '../../user.model';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  public user: User;
+  user: User;
   authSubscription: Subscription;
 
   constructor(
     private authorizationService: AuthorizationService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +30,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   public onLogOut(): void {
     this.authorizationService.logout();
+    this.router.navigate(['/login']);
   }
 
   private checkAuth(): void {

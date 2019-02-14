@@ -22,6 +22,12 @@ export class AuthorizationService {
 
   constructor() { }
 
+  public initialAuthCheck(): void {
+    if (localStorage.getItem('user') && localStorage.getItem('token')) {
+      this.isLoginSubject.next(true);
+    }
+  }
+
   public login(name: string, password: string): Observable<any> {
     return this.getMockResponse().pipe(
       tap((response: any) => {
