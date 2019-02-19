@@ -1,19 +1,18 @@
 import {
   Component,
-  EventEmitter,
-  Input, OnDestroy,
+  OnDestroy,
   OnInit,
-  Output,
 } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Course } from '../../course.model';
 import { CoursesService } from '../../services/courses/courses.service';
-import { SearchByPipe } from '../../../shared/pipes/search-by/search-by.pipe';
 import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component';
+import { CompositeDisposable } from '../../../shared/helpers/CompositeDisposable';
+import { debounceTime, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-courses-list',
@@ -22,8 +21,10 @@ import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/
 })
 export class CoursesListComponent implements OnInit, OnDestroy {
   courses: Course[] = [];
-  coursesSubscription: Subscription;
-  searchValue = '';
+  searchValue = new Subject<string>();
+  currentSearchValue = '';
+
+  anchor: CompositeDisposable = new CompositeDisposable();
 
   constructor(
     private coursesService: CoursesService,
@@ -32,19 +33,27 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.coursesService.getList(this.searchValue, true);
-    this.coursesSubscription = this.coursesService.courses.subscribe((courses: Course[]) => {
-      this.courses = courses;
-    });
+    this.coursesService.getList(null, true);
+    this.anchor.add(
+      this.coursesService.courses.subscribe((courses: Course[]) => {
+        this.courses = courses;
+      }),
+    );
+
+    this.anchor.add(
+      this.coursesService.search(
+        this.searchValue.pipe(
+          debounceTime(500),
+          filter((textFragment: string) => textFragment.length > 2 || textFragment === ''),
+        ),
+      )
+        .subscribe(
+      (searchValue: string) => this.currentSearchValue = searchValue,
+    ));
   }
 
   ngOnDestroy(): void {
-    this.coursesSubscription.unsubscribe();
-  }
-
-  public searchCourses(searchValue: string): void {
-    this.searchValue = searchValue;
-    this.coursesService.getList(searchValue, true);
+    this.anchor.unsubscribe();
   }
 
   public onDelete(course: Course): void {
@@ -61,6 +70,10 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   public onLoadMore(): void {
-    this.coursesService.getList(this.searchValue);
+    this.coursesService.getList(this.currentSearchValue);
+  }
+
+  public searchCourses(searchValue: string): void {
+    this.searchValue.next(searchValue);
   }
 }

@@ -1,25 +1,25 @@
 {
     "extends": "../tslint.json",
     "rules": {
-        "directive-selector": [
-            true,
-            "attribute",
-            "app",
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            "app",
-            "kebab-case"
-        ],
-       "trailing-comma": [
-         true,
-         {
-           "multiline": "always",
-           "singleline": "never"
-         }
-       ],
+      "directive-selector": [
+        true,
+        "attribute",
+        "app",
+        "camelCase"
+      ],
+      "component-selector": [
+        true,
+        "element",
+        "app",
+        "kebab-case"
+      ],
+      "trailing-comma": [
+        true,
+        {
+          "multiline": "always",
+          "singleline": "never"
+        }
+      ],
       "typedef": [
         true,
         "call-signature",

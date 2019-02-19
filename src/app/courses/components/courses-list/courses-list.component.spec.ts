@@ -3,12 +3,11 @@ import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { CoursesListComponent } from './courses-list.component';
-import { Course } from '../../course.model';
 import { OrderByPipe } from '../../../shared/pipes/order-by/order-by.pipe';
 import { MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoursesService } from '../../services/courses/courses.service';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 describe('CoursesListComponent', () => {
@@ -46,6 +45,7 @@ describe('CoursesListComponent', () => {
   const coursesServiceStub = {
     getList: () => null,
     courses: of(testCourses),
+    search: (subject: Observable<string>) => of(subject),
   };
 
   beforeEach(async(() => {
