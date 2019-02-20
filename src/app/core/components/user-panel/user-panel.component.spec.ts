@@ -16,13 +16,15 @@ describe('UserPanelComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserPanelComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
 
     component.user = {
       id: '1',
-      firstName: 'User',
-      lastName: 'User Lastname',
+      name: {
+        first: 'User',
+        last: 'User Lastname',
+      },
     };
+    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -31,7 +33,7 @@ describe('UserPanelComponent', () => {
 
   it('should get user', () => {
     expect(component.id).toBeTruthy();
-    expect(component.firstName).toBeTruthy();
-    expect(component.lastName).toBeTruthy();
+    expect(component.name.first).toBeTruthy();
+    expect(component.name.last).toBeTruthy();
   });
 });

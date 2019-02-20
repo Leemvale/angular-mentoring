@@ -9,20 +9,21 @@ import { User } from '../../user.model';
 export class UserPanelComponent implements OnInit, User {
 
   id: string;
-  firstName: string;
-  lastName: string;
+  name: {
+    first: string;
+    last: string;
+  };
 
   @Input()
   set user(user: User) {
     this.id = user.id;
-    this.firstName = user.firstName;
-    this.lastName = user.lastName;
+    this.name = user.name;
   }
 
   @Output() logOut:  EventEmitter<void> = new EventEmitter();
 
-  get name(): string {
-    return `${this.firstName} ${this.lastName}`;
+  get userName(): string {
+    return `${this.name.first} ${this.name.last}`;
   }
 
   constructor() { }

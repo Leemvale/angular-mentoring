@@ -9,12 +9,12 @@ describe('StylingByCreationDirective', () => {
   let divTested: HTMLElement;
   @Component({
     template: `
-    <div [appStylingByCreation]="creationDate.getTime()">Test</div>
+    <div [appStylingByCreation]="date">Test</div>
     `,
   })
 
   class TestComponent {
-    creationDate: Date = new Date();
+    date: string = new Date().toISOString();
   }
 
   beforeEach(() => {
@@ -42,7 +42,7 @@ describe('StylingByCreationDirective', () => {
   it('should change shadow color to blue', () => {
     const blueColor = 'rgb(81, 196, 228)';
     const millisecondsPerDay = 24 * 60 * 60 * 1000;
-    component.creationDate = new Date(component.creationDate.getTime() + millisecondsPerDay);
+    component.date = new Date(Date.parse(component.date) + millisecondsPerDay).toISOString();
     fixture.detectChanges();
     expect(divTested.style.boxShadow ).toBe(blueColor + ' 0px 0px 10px 0px');
   });

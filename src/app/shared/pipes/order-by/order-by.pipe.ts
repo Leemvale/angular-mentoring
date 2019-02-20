@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class OrderByPipe implements PipeTransform {
 
   transform(values: any[], parameter: string): any[] {
-    if (parameter === 'creationDate') {
-      return values.sort((a: any, b: any) => b[parameter].getTime() - a[parameter].getTime() );
+    if (parameter === 'date') {
+      return values.sort((a: string, b: string) => Date.parse(b[parameter]) - Date.parse(a[parameter]) );
     }
   }
 

@@ -11,12 +11,12 @@ import { StylingByCreationDirective } from '../../../shared/directives/styling-b
 
 describe('CourseComponent', () => {
   const testCourse = {
-    id: '1',
-    title: 'TestCourse1',
-    creationDate: new Date('12/22/2018'),
-    duration: 10,
+    id: 1,
+    name: 'TestCourse1',
+    date: new Date('12/22/2018').toISOString(),
+    length: 10,
     description: 'Course description',
-    topRated: true,
+    isTopRated: true,
   } as Course;
 
   @Component({
@@ -98,7 +98,7 @@ describe('CourseComponent', () => {
     it('should render course title', () => {
       fixture.detectChanges();
       const title = debugElement.query(By.css('.course__title')).nativeElement.textContent;
-      expect(title).toBe(testCourse.title.toUpperCase());
+      expect(title).toBe(testCourse.name.toUpperCase());
     });
 
     it('should render course description', () => {
@@ -110,7 +110,7 @@ describe('CourseComponent', () => {
     it('should render course duration', () => {
       fixture.detectChanges();
       const duration = debugElement.query(By.css('.fa-clock+.property__title+span')).nativeElement.textContent;
-      expect(duration).toBe(`${testCourse.duration}m`);
+      expect(duration).toBe(`${testCourse.length}m`);
     });
 
     it('should render course date correct', () => {
@@ -134,7 +134,7 @@ describe('CourseComponent', () => {
     it('should not render top rated sign', () => {
       component.course = {
         ...testCourse,
-        topRated: false,
+        isTopRated: false,
       };
       fixture.detectChanges();
       const star = debugElement.query(By.css('.top-rated-sign'));
@@ -176,7 +176,7 @@ describe('CourseComponent', () => {
 
     it('should render course title', () => {
       const title = debugElement.query(By.css('.course__title')).nativeElement.textContent;
-      expect(title).toBe(testCourse.title.toUpperCase());
+      expect(title).toBe(testCourse.name.toUpperCase());
     });
 
     it('should render course description', () => {
@@ -186,7 +186,7 @@ describe('CourseComponent', () => {
 
     it('should render course duration', () => {
       const duration = debugElement.query(By.css('.fa-clock+.property__title+span')).nativeElement.textContent;
-      expect(duration).toBe(`${testCourse.duration}m`);
+      expect(duration).toBe(`${testCourse.length}m`);
     });
 
     it('should render course date correct', () => {

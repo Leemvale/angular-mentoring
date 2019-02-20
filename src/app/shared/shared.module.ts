@@ -14,6 +14,7 @@ import { ModalConfirmComponent } from './components/modal-confirm/modal-confirm.
 import { DateInputComponent } from './components/date-input/date-input.component';
 import { DurationInputComponent } from './components/duration-input/duration-input.component';
 import { PeopleInputComponent } from './components/people-input/people-input.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { PeopleInputComponent } from './components/people-input/people-input.com
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
   ],
   exports: [
     CommonModule,
@@ -43,6 +45,7 @@ import { PeopleInputComponent } from './components/people-input/people-input.com
     ReactiveFormsModule,
     FormsModule,
     RouterModule,
+    HttpClientModule,
     BreadcrumbsComponent,
     StylingByCreationDirective,
     DurationPipe,

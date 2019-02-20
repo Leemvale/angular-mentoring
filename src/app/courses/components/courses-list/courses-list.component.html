@@ -4,7 +4,7 @@
   <p *ngIf="!courses.length">No data, feel free to add new course</p>
 
   <ul>
-    <li *ngFor="let course of courses | orderBy: 'creationDate'">
+    <li *ngFor="let course of courses | orderBy: 'date'">
       <app-course [course]="course" (delete)="onDelete($event)"></app-course>
     </li>
   </ul>

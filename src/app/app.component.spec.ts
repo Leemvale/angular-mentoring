@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { AuthorizationService } from './core/services/authorization/authorization.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,6 +13,9 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
+      ],
+      providers: [
+        { provide: AuthorizationService, useValue: { initialAuthCheck: () => {} }},
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

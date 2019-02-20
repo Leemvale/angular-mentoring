@@ -2,6 +2,8 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthGuard } from './auth.guard';
+import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { of } from 'rxjs';
 
 describe('AuthGuard', () => {
   beforeEach(() => {
@@ -9,7 +11,10 @@ describe('AuthGuard', () => {
       imports: [
         RouterTestingModule,
       ],
-      providers: [AuthGuard],
+      providers: [
+        AuthGuard,
+        { provide: AuthorizationService, useValue: { isAuthenticated: () => of(true)} },
+      ],
     });
   });
 

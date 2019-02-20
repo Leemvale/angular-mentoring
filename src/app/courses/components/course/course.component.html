@@ -1,16 +1,16 @@
-<a class="course" [ngClass]="{'course--top-rated': course.topRated}" [appStylingByCreation]="course.creationDate.getTime()" >
+<a class="course" [ngClass]="{'course--top-rated': course.isTopRated}" [appStylingByCreation]="course.date" >
   <img class="course__img" [src]="course.image ? course.image : defaultImageSrc" alt="course-img"/>
   <div class="course__main">
-    <h2 class="course__title">{{course.title | uppercase}}<i class="fas fa-star top-rated-sign" *ngIf="course.topRated"></i></h2>
-    <p>{{course.description}}</p>
+    <h2 class="course__title">{{course.name | uppercase}}<i class="fas fa-star top-rated-sign" *ngIf="course.isTopRated"></i></h2>
+    <p class="course__description">{{course.description}}</p>
     <span class="property">
       <i class="far fa-clock icon"></i>
       <span class="property__title">Duration:</span>
-      <span>{{course.duration | duration}}</span>
+      <span>{{course.length | duration}}</span>
     </span>
     <span class="property">
       <i class="far fa-calendar-alt icon"></i>
-      <span class="property__title">Date:</span> <time>{{course.creationDate | date}}</time></span>
+      <span class="property__title">Date:</span> <time>{{course.date | date}}</time></span>
   </div>
   <div class="buttons">
     <button class="btn-icon" (click)="onEdit(course)"><i class="far fa-edit"></i></button>
