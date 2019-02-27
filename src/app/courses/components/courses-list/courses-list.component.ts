@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 
 import { Course } from '../../course.model';
-import { CoursesService } from '../../services/courses/courses.service';
 import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component';
 import { CompositeDisposable } from '../../../shared/helpers/CompositeDisposable';
-import { debounceTime, filter } from 'rxjs/operators';
+import { debounceTime, filter, tap } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+import { StoreModel } from '../../../store.model';
+import { DeleteCourse, LoadCourses } from '../../../ngrx/actions/courses.actions';
 
 @Component({
   selector: 'app-courses-list',
@@ -27,29 +29,25 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   anchor: CompositeDisposable = new CompositeDisposable();
 
   constructor(
-    private coursesService: CoursesService,
     private dialog: MatDialog,
     private router: Router,
+    private store: Store<StoreModel>,
   ) { }
 
   ngOnInit(): void {
-    this.coursesService.getList(null, true);
+    this.store.dispatch(new LoadCourses({ newSet: true }));
     this.anchor.add(
-      this.coursesService.courses.subscribe((courses: Course[]) => {
+      this.store.pipe(select('courses')).subscribe((courses: Course[]) => {
         this.courses = courses;
       }),
     );
 
     this.anchor.add(
-      this.coursesService.search(
-        this.searchValue.pipe(
-          debounceTime(500),
-          filter((textFragment: string) => textFragment.length > 2 || textFragment === ''),
-        ),
-      )
-        .subscribe(
-      (searchValue: string) => this.currentSearchValue = searchValue,
-    ));
+      this.searchValue.pipe(
+        debounceTime(500),
+        filter((textFragment: string) => textFragment.length > 2 || textFragment === ''),
+        tap((textFragment: string) => this.store.dispatch(new LoadCourses({ textFragment }))),
+      ).subscribe());
   }
 
   ngOnDestroy(): void {
@@ -60,7 +58,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     this.dialog.open(ModalConfirmComponent, {
       data: {
         title: `Remove course ${course.name}`,
-        confirm: () => this.coursesService.removeItem(course.id),
+        confirm: () => this.store.dispatch(new DeleteCourse(course.id)),
       },
     });
   }
@@ -70,10 +68,11 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   public onLoadMore(): void {
-    this.coursesService.getList(this.currentSearchValue);
+    this.store.dispatch(new LoadCourses({ textFragment: this.currentSearchValue }));
   }
 
   public searchCourses(searchValue: string): void {
+    this.currentSearchValue = searchValue;
     this.searchValue.next(searchValue);
   }
 }
