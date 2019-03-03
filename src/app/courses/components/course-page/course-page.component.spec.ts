@@ -9,8 +9,6 @@ import { of, throwError } from 'rxjs';
 import { CoursePageComponent } from './course-page.component';
 import { DialogModes } from '../../../shared/enums';
 import { CoursesService } from '../../services/courses/courses.service';
-import { CoursesComponent } from '../courses/courses.component';
-
 
 describe('CoursePageComponent', () => {
   let component: CoursePageComponent;

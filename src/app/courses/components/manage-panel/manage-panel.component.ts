@@ -11,7 +11,6 @@ import {
   styleUrls: ['./manage-panel.component.scss'],
 })
 export class ManagePanelComponent implements OnInit {
-  searchValue: string;
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() addNew: EventEmitter<string> = new EventEmitter();
 
@@ -20,8 +19,8 @@ export class ManagePanelComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onSearchClick(): void {
-    this.search.emit(this.searchValue);
+  public onSearch(searchValue: string): void {
+    this.search.emit(searchValue);
   }
 
   public onAddCourse(): void {

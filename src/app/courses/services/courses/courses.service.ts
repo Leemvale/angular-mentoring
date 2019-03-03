@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Course } from '../../course.model';
-import { tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -28,16 +28,21 @@ export class CoursesService {
   }
 
   public getList(textFragment?: string, newSet?: boolean): void {
+    this.getCoursesEntities(textFragment, newSet).subscribe(
+       null,
+        (error: Error) => console.log('Could not load courses.'));
+  }
+
+  private getCoursesEntities(textFragment?: string, newSet?: boolean): Observable<Course[]> {
     const onePageItems = 5;
     const numberOfItems = newSet ? onePageItems : this.dataStore.courses.length + onePageItems;
     const textSearch = textFragment ? `&textFragment=${textFragment}` : '';
-    this.http.get<Course[]>(`${this.baseUrl}/courses?start=0&count=${numberOfItems}` + textSearch)
-      .subscribe(
-        (courses: Course[]) => {
+    return this.http.get<Course[]>(`${this.baseUrl}/courses?start=0&count=${numberOfItems}` + textSearch).pipe(
+      tap((courses: Course[]) => {
         this.dataStore.courses = courses;
         this._courses.next(Object.assign({}, this.dataStore).courses);
-      },
-        (error: Error) => console.log('Could not load courses.'));
+      }),
+    );
   }
 
   public createCourse(newCourse: Course): Observable<void> {
@@ -76,5 +81,11 @@ export class CoursesService {
 
   public courseMockResponse(course: Course): Observable<Course> {
     return of(course);
+  }
+
+  public search(textFragments: Observable<string>): Observable<string> {
+    return textFragments.pipe(
+      switchMap((textFragment: string) => this.getCoursesEntities(textFragment, true).pipe(map((courses: Course[]) => textFragment))),
+    );
   }
 }

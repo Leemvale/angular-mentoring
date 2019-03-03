@@ -23,7 +23,7 @@ describe('AuthorizationService', () => {
 
   it('should set token to local storage when user logged in', (done: DoneFn) => {
     service.login('testemail', 'testPassword').subscribe(() => {
-      expect(JSON.parse(localStorage.getItem('token'))).toEqual(mockResponse.token);
+      expect(localStorage.getItem('token')).toEqual(mockResponse.token);
       done();
     });
   });
