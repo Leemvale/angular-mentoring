@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../../services/courses/courses.service';
 import { DialogModes } from '../../../shared/enums';
 import { CompositeDisposable } from '../../../shared/helpers/CompositeDisposable';
+import { StoreModel } from '../../../store.model';
+import { Store } from '@ngrx/store';
+import { AddCourse, EditCourse } from '../../../ngrx/actions/courses.actions';
 
 
 @Component({
@@ -33,6 +36,7 @@ export class CoursePageComponent implements OnInit, OnDestroy {
     private coursesService: CoursesService,
     private activatedRoute: ActivatedRoute,
     private route: Router,
+    private store: Store <StoreModel>,
   ) { }
 
   ngOnInit(): void {
@@ -61,19 +65,11 @@ export class CoursePageComponent implements OnInit, OnDestroy {
 
   public onSave(): void {
     if (this.dialogMode === DialogModes.Create ) {
-      const createSubscription = this.coursesService.createCourse(this.course).subscribe(
-        () => this.route.navigate(['courses']),
-        () => console.log('Could not create course'),
-      );
-      this.anchor.add(createSubscription);
+      this.store.dispatch(new AddCourse(this.course));
     }
 
     if (this.dialogMode === DialogModes.Edit) {
-      const updateSubscription = this.coursesService.updateItem(this.course).subscribe(
-        () => this.route.navigate(['courses']),
-        () => console.log('Could not update course'),
-      );
-      this.anchor.add(updateSubscription);
+      this.store.dispatch(new EditCourse(this.course));
     }
   }
 

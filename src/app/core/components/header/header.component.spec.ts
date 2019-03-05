@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 import { HeaderComponent } from './header.component';
-import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { Store } from '@ngrx/store';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,7 +19,7 @@ describe('HeaderComponent', () => {
     },
   };
 
-  const authSpy = { CurrentUser: of(testUser)};
+  const storeSpy = of({user: testUser});
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -31,7 +31,7 @@ describe('HeaderComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA,
       ],
       providers: [
-        { provide: AuthorizationService, useValue: authSpy },
+        { provide: Store, useValue: storeSpy },
       ],
     })
     .compileComponents();

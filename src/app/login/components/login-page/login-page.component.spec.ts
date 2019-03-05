@@ -1,17 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { LoginPageComponent } from './login-page.component';
-import { AuthorizationService } from '../../../core/services/authorization/authorization.service';
-import { of } from 'rxjs';
+
+import { Store } from '@ngrx/store';
 
 describe('LoginPageComponent', () => {
   let component: LoginPageComponent;
   let fixture: ComponentFixture<LoginPageComponent>;
 
-  const authServiceMock = jasmine.createSpyObj('AuthorizationService', ['login']);
-  authServiceMock.login.and.returnValue(of({}));
+  const storeSpy = jasmine.createSpyObj('Store', ['dispatch']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,8 +22,8 @@ describe('LoginPageComponent', () => {
         RouterModule,
       ],
       providers: [
-        { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } },
-        { provide: AuthorizationService, useValue: authServiceMock },
+        FormBuilder,
+        { provide: Store, useValue: storeSpy },
       ],
     })
     .compileComponents();

@@ -1,9 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthorizationService } from '../../services/authorization/authorization.service';
+import { select, Store } from '@ngrx/store';
+
 import { User } from '../../user.model';
 import { CompositeDisposable } from '../../../shared/helpers/CompositeDisposable';
+import { StoreModel } from '../../../store.model';
+import { Logout } from '../../../ngrx/actions/auth.actions';
 
 @Component({
   selector: 'app-header',
@@ -15,13 +18,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   anchor: CompositeDisposable = new CompositeDisposable();
 
   constructor(
-    private authorizationService: AuthorizationService,
+    private store: Store<StoreModel>,
     private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.anchor.add(
-      this.authorizationService.CurrentUser.subscribe(
+      this.store.pipe(select('user')).subscribe(
         (user: User) => this.user = user,
       ),
     );
@@ -32,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public onLogOut(): void {
-    this.authorizationService.logout();
+    this.store.dispatch(new Logout());
     this.router.navigate(['/login']);
   }
 }

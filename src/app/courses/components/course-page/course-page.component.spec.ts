@@ -4,11 +4,12 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 
 import { CoursePageComponent } from './course-page.component';
 import { DialogModes } from '../../../shared/enums';
 import { CoursesService } from '../../services/courses/courses.service';
+import { Store } from '@ngrx/store';
 
 describe('CoursePageComponent', () => {
   let component: CoursePageComponent;
@@ -27,6 +28,8 @@ describe('CoursePageComponent', () => {
   coursesServiceStub.createCourse.and.returnValue(of({}));
   coursesServiceStub.updateItem.and.returnValue(of({}));
   coursesServiceStub.getItemById.and.returnValue(of(testCourse));
+
+  const storeSpy = jasmine.createSpyObj('Store', ['dispatch']);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,6 +52,7 @@ describe('CoursePageComponent', () => {
             params: of({ id: '1'}),
           },
         },
+        { provide: Store, useValue: storeSpy },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
@@ -68,34 +72,16 @@ describe('CoursePageComponent', () => {
 
   it('should call create course method', () => {
     component.dialogMode = DialogModes.Create;
-    const coursesService = TestBed.get(CoursesService);
+    const coursesService = TestBed.get(Store);
     component.onSave();
-    expect(coursesService.createCourse).toHaveBeenCalled();
+    expect(coursesService.dispatch).toHaveBeenCalled();
   });
 
   it('should call update course method', () => {
     component.dialogMode = DialogModes.Edit;
-    const coursesService = TestBed.get(CoursesService);
+    const coursesService = TestBed.get(Store);
     component.onSave();
-    expect(coursesService.updateItem).toHaveBeenCalled();
-  });
-
-  it('should log error message if cannot create', () => {
-    component.dialogMode = DialogModes.Create;
-    const coursesService = TestBed.get(CoursesService);
-    coursesService.createCourse.and.returnValue(throwError(new Error('Test error')));
-    const log = spyOn( console, 'log');
-    component.onSave();
-    expect(log).toHaveBeenCalledWith('Could not create course');
-  });
-
-  it('should log error message if cannot update', () => {
-    component.dialogMode = DialogModes.Edit;
-    const coursesService = TestBed.get(CoursesService);
-    coursesService.updateItem.and.returnValue(throwError(new Error('Test error')));
-    const log = spyOn( console, 'log');
-    component.onSave();
-    expect(log).toHaveBeenCalledWith('Could not update course');
+    expect(coursesService.dispatch).toHaveBeenCalled();
   });
 
   it('should set edit title', () => {

@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -13,10 +13,6 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
 import { LoadingBlockService } from './services/loading-block/loading-block.service';
-
-export function loadConfigurations(authService: AuthorizationService): Function {
-  return () => authService.initialAuthCheck().toPromise();
-}
 
 @NgModule({
   declarations: [
@@ -36,12 +32,6 @@ export function loadConfigurations(authService: AuthorizationService): Function 
     AuthorizationService,
     LoadingBlockService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: loadConfigurations,
-      deps: [AuthorizationService],
-      multi: true,
-    },
   ],
   exports: [
     HeaderComponent,

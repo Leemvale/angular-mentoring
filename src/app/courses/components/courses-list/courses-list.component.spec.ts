@@ -6,8 +6,8 @@ import { CoursesListComponent } from './courses-list.component';
 import { OrderByPipe } from '../../../shared/pipes/order-by/order-by.pipe';
 import { MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoursesService } from '../../services/courses/courses.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 
 describe('CoursesListComponent', () => {
@@ -42,11 +42,8 @@ describe('CoursesListComponent', () => {
     },
   ];
 
-  const coursesServiceStub = {
-    getList: () => null,
-    courses: of(testCourses),
-    search: (subject: Observable<string>) => of(subject),
-  };
+  const storeSpy = of({courses: testCourses});
+  storeSpy['dispatch'] = () => {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -62,7 +59,7 @@ describe('CoursesListComponent', () => {
         CUSTOM_ELEMENTS_SCHEMA,
       ],
       providers: [
-        { provide: CoursesService, useValue: coursesServiceStub },
+        { provide: Store, useValue: storeSpy },
       ],
     })
     .compileComponents();
