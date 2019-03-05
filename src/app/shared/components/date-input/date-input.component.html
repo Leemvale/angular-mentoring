@@ -1,1 +1,2 @@
-<input #newDate type="date" (ngModelChange)="onDateChange(newDate.valueAsDate)" [ngModel] ="date | date:'yyyy-MM-dd'">
+<input [formControl]="date" (keyup)="writeValue()" [ngClass]="ngClass">
+

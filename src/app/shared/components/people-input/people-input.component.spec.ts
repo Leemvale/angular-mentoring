@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PeopleInputComponent } from './people-input.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material';
 
 describe('PeopleInputComponent', () => {
   let component: PeopleInputComponent;
@@ -8,6 +10,10 @@ describe('PeopleInputComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+      ],
       declarations: [ PeopleInputComponent ],
     })
     .compileComponents();

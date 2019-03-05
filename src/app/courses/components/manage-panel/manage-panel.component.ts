@@ -4,6 +4,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-panel',
@@ -14,13 +15,15 @@ export class ManagePanelComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() addNew: EventEmitter<string> = new EventEmitter();
 
+  searchControl = new FormControl('');
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  public onSearch(searchValue: string): void {
-    this.search.emit(searchValue);
+  public onSearch(): void {
+    this.search.emit(this.searchControl.value);
   }
 
   public onAddCourse(): void {

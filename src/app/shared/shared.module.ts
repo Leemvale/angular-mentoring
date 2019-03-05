@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatAutocompleteModule, MatButtonModule, MatDialogModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ import { DateInputComponent } from './components/date-input/date-input.component
 import { DurationInputComponent } from './components/duration-input/duration-input.component';
 import { PeopleInputComponent } from './components/people-input/people-input.component';
 import { HttpClientModule } from '@angular/common/http';
+// import { DateFormatValidatorDirective } from './validators/date-format.validator';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     DateInputComponent,
     DurationInputComponent,
     PeopleInputComponent,
+    // DateFormatValidatorDirective,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     RouterModule,
     HttpClientModule,
+    MatAutocompleteModule,
   ],
   exports: [
     CommonModule,
@@ -53,6 +56,7 @@ import { HttpClientModule } from '@angular/common/http';
     DateInputComponent,
     DurationInputComponent,
     PeopleInputComponent,
+    MatAutocompleteModule,
   ],
   entryComponents: [
     ModalConfirmComponent,
