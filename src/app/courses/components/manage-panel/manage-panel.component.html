@@ -3,7 +3,7 @@
     <h1>Find or add angular courses...</h1>
 
     <div class="search-input manage-panel__search">
-      <input #search type="text" (keyup)="onSearch(search.value)">
+      <input type="text" (keyup)="onSearch()" [formControl]="searchControl">
     </div>
 
     <button class="button" (click)="onAddCourse()" ><i class="fa fa-plus"></i>Add course</button>

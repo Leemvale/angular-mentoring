@@ -10,24 +10,35 @@ import { CoursePageComponent } from './course-page.component';
 import { DialogModes } from '../../../shared/enums';
 import { CoursesService } from '../../services/courses/courses.service';
 import { Store } from '@ngrx/store';
+import { AuthorsService } from '../../services/authors/authors.service';
+import { Course } from '../../course.model';
+import { DateInputComponent } from '../../../shared/components/date-input/date-input.component';
+import { DurationInputComponent } from '../../../shared/components/duration-input/duration-input.component';
+import { PeopleInputComponent } from '../../../shared/components/people-input/people-input.component';
+import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
+import { MatAutocompleteModule } from '@angular/material';
 
 describe('CoursePageComponent', () => {
   let component: CoursePageComponent;
   let fixture: ComponentFixture<CoursePageComponent>;
 
   const testCourse = {
-    id: '1',
-    title: 'Test Course1',
-    date: new Date('01/05/2019'),
-    duration: 120,
+    id: 1,
+    name: 'Test Course1',
+    date: new Date('01/05/2019').toISOString(),
+    length: 120,
     description: 'Course description',
-    topRated: false,
-  };
+    isTopRated: false,
+  } as Course;
 
   const coursesServiceStub = jasmine.createSpyObj('CoursesService', ['createCourse', 'updateItem', 'getItemById']);
   coursesServiceStub.createCourse.and.returnValue(of({}));
   coursesServiceStub.updateItem.and.returnValue(of({}));
   coursesServiceStub.getItemById.and.returnValue(of(testCourse));
+
+  const authorsServiseStub = {
+    loadAuthors: () => of([]),
+  };
 
   const storeSpy = jasmine.createSpyObj('Store', ['dispatch']);
 
@@ -35,16 +46,22 @@ describe('CoursePageComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        MatAutocompleteModule,
         RouterTestingModule.withRoutes([
           { path: 'courses', component: CoursePageComponent },
         ]),
       ],
       declarations: [
         CoursePageComponent,
+        DateInputComponent,
+        DurationInputComponent,
+        DurationPipe,
+        PeopleInputComponent,
       ],
       providers: [
         FormBuilder,
         { provide: CoursesService, useValue: coursesServiceStub },
+        { provide: AuthorsService, useValue: authorsServiseStub },
         {
           provide: ActivatedRoute,
           useValue: {

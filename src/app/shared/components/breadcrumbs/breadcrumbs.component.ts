@@ -5,6 +5,7 @@ import { filter, pluck, mergeMap } from 'rxjs/operators';
 import { CompositeDisposable } from '../../helpers/CompositeDisposable';
 import { CoursesService } from 'src/app/courses/services/courses/courses.service';
 import { Course } from 'src/app/courses/course.model';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -27,7 +28,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       pluck('snapshot'),
       filter((event: any) => event._lastPathIndex !== 0),
       pluck( 'params'),
-      mergeMap((event: any) => this.courses.getItemById(event.id)),
+      mergeMap((event: any) => event.id ? this.courses.getItemById(event.id) : of(null)),
     )
       .subscribe((course: Course) => {
         if (course) {

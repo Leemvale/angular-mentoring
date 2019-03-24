@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ManagePanelComponent } from './manage-panel.component';
 
@@ -15,6 +15,7 @@ describe('ManagePanelComponent', () => {
        ],
       imports: [
         FormsModule,
+        ReactiveFormsModule,
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -46,7 +47,8 @@ describe('ManagePanelComponent', () => {
     const search = spyOn(component.search, 'emit');
     const testString = 'test string';
 
-    component.onSearch(testString);
+    component.searchControl.setValue(testString);
+    component.onSearch();
     expect(search).toHaveBeenCalledWith(testString);
   });
 });

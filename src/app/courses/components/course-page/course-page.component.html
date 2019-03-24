@@ -4,34 +4,62 @@
   <form [formGroup]="addCourseForm" class="addCourseForm">
     <label>
       Title*
-      <input type="text" formControlName="name" [(ngModel)]="course.name">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div *ngIf="name.errors.required">Required!</div>
+        <div *ngIf="name.errors.maxlength">Title should be less than 50 characters!</div>
+      </div>
+      <input type="text" formControlName="name"
+             [ngClass]="{'incorrect': name.invalid && (name.dirty || name.touched)}">
     </label>
 
     <label>
       Description*
-      <textarea type="text" formControlName="description" [(ngModel)]="course.description"></textarea>
+      <div *ngIf="description.invalid && (description.dirty || description.touched)">
+        <div *ngIf="description.errors.required">Required!</div>
+        <div *ngIf="description.errors.maxlength">Description should be less than 500 characters!</div>
+      </div>
+      <textarea type="text" formControlName="description"
+                [ngClass]="{'incorrect': description.invalid && (description.dirty || description.touched)}">
+      </textarea>
     </label>
 
     <div class="row">
+
       <label class="row-2-col">
         Date*
-        <app-date-input [(date)]="course.date"></app-date-input>
+        <div *ngIf="date.invalid && (date.dirty || date.touched)">
+          <div *ngIf="date.errors.required">Required!</div>
+          <div *ngIf="date.errors.formatIncorrect">Format should be dd/MM/YYYY!</div>
+        </div>
+        <app-date-input class="row-2-col" formControlName="date"
+                        [ngClass]="{'incorrect': date.invalid && (date.dirty || date.touched)}">
+        </app-date-input>
       </label>
+
 
       <label class="row-2-col">
         Duration*
-        <app-duration-input [(duration)]="course.length"></app-duration-input>
+        <div *ngIf="length.invalid && (length.dirty || length.touched)">
+          <div *ngIf="length.errors.required">Required!</div>
+          <div *ngIf="length.errors.isNotNumber">Is not a number!</div>
+        </div>
+        <app-duration-input class="row-2-col" formControlName="length"
+                            [ngClass]="{'incorrect': length.invalid && (length.dirty || length.touched)}">
+        </app-duration-input>
       </label>
 
     </div>
 
     <label>
       Authors*
-      <app-people-input></app-people-input>
+      <div *ngIf="authors.invalid && (authors.dirty || authors.touched)"> Required! </div>
+      <app-people-input (search)="onSearch($event)" [peopleList]="searchedAuthors" formControlName="authors"
+                        [ngClass]="{'incorrect': authors.invalid && (authors.dirty || authors.touched)}">
+      </app-people-input>
     </label>
 
   </form>
 
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="onSave()">Save</button>
+  <button mat-button (click)="onSave()" [disabled]="!addCourseForm.valid">Save</button>
 </div>

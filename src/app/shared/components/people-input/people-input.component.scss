@@ -1,0 +1,36 @@
+.people-input {
+  display: flex;
+  width: 100%;
+  border: 1px solid #dcdde2;;
+  border-radius: 10px;
+  height: 35px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  padding: 2px;
+
+  input {
+    border: none;
+    height: 100%;
+    margin: 0;
+  }
+
+  &__person {
+    display: flex;
+    background-color: #ea9094;
+    border-radius: 30px;
+    color: white;
+    padding: 3px 5px;
+    height: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    margin: 0 2px;
+
+    i {
+      margin: 0 3px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Course } from '../../course.model';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -50,7 +50,7 @@ export class CoursesService {
   }
 
   public getItemById(id: number): Observable<Course> {
-    return of(this.dataStore.courses.find((item: Course) => item.id === id));
+    return this.http.get<Course>(`${this.baseUrl}/courses/${id}`);
   }
 
   public updateItem(courseToUpdate: Course): Observable<void> {
